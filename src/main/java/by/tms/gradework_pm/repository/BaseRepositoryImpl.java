@@ -14,11 +14,6 @@ public abstract class BaseRepositoryImpl<E, ID> implements BaseRepository<E, ID>
     private final Class<E> entityClass;
 
     @Override
-    public E getReferenceById(ID id) {
-        return entityManager.getReference(entityClass, id);
-    }
-
-    @Override
     public Optional<E> findById(ID id) {
         return Optional.ofNullable(entityManager.find(entityClass, id));
     }
@@ -33,6 +28,5 @@ public abstract class BaseRepositoryImpl<E, ID> implements BaseRepository<E, ID>
         E tmpEntity = entityManager.find(entityClass, id);
         entityManager.remove(tmpEntity);
     }
-
 
 }
