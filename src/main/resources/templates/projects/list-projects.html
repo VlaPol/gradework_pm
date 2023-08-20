@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head th:replace="layouts :: head">
+		<title>Projects</title>
+	</head>
+	
+	<body>
+	
+	<nav th:replace="layouts :: navbar"></nav>
+
+		<div class="container">
+			<h3>Projects Directory</h3>
+			<hr>
+
+			<a th:href="@{/projects/new}"
+				class="btn btn-secondary btn-sm mb-3">
+				New Project 
+			</a>
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Project Name</th>
+						<th>Project Stage</th>
+						<th>Project Begin</th>
+						<th>Project End</th>
+						<th>Action</th>
+					</tr>
+				</thead>		
+				<tbody>
+					<tr th:each="aProject : ${projects}">
+						<td th:text="${aProject.getName()}"/>
+						<td th:text="${aProject.getStage()}"/>
+						<td th:text="${aProject.getStartDate()}"/>
+						<td th:text="${aProject.getEndDate()}"/>
+						<td th:width="180">
+							<a th:href="@{/projects/update(projectid=${aProject.projectId})}"
+							   class="btn btn-outline-secondary btn-sm"> Update </a>
+							<a th:href="@{/projects/delete(projectid=${aProject.projectId})}"
+							   class="btn btn btn-outline-danger btn-sm"
+							   onclick="if(!(confirm('Are you sure to delete this employee?'))) return false"> Delete </a>
+						</td>
+					</tr>
+				</tbody>
+			
+			</table>
+		</div>
+
+	</body>
+	
+</html>

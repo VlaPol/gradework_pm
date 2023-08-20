@@ -21,7 +21,9 @@ public class Project extends BaseEntity{
     private String name;
     private String description;
     private String stage;
+    @Column(name = "start_date")
     private Date startDate;
+    @Column(name = "end_date")
     private Date endDate;
 
     @ManyToMany(cascade = {CascadeType.DETACH,
