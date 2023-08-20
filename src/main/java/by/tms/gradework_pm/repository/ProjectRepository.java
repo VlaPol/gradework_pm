@@ -13,5 +13,7 @@ public interface ProjectRepository extends BaseRepository<Project, Long> {
 
     List<ProjectDto> findAllByStage(Stage stage);
 
+    List<ProjectDto> findAllProjects();
+
 
 }

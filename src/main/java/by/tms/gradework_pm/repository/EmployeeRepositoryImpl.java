@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.repository;
 
+import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.entity.Employee;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -40,12 +41,32 @@ public class EmployeeRepositoryImpl
 
     }
 
-    public Optional<Employee> findByEmail(String email) {
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+
+        final String sql = """
+                            SELECT e.first_name, e.last_name,
+                            e.email
+                            FROM employee e
+                            ORDER BY e.last_name DESC
+                        """;
+
+        return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
+            EmployeeDto dto = new EmployeeDto();
+            dto.setFirstName (rs.getString("FIRST_NAME"));
+            dto.setLastName(rs.getString("LAST_NAME"));
+            dto.setEmail(rs.getString("email"));
+            return dto;
+        }));
+    }
+
+    @Override
+    public Optional<EmployeeDto> findByEmail(String email) {
         return entityManager.createQuery("""
                         SELECT emp
                         FROM Employee emp
                         WHERE lower(emp.email) = lower(:email)
-                        """, Employee.class)
+                        """, EmployeeDto.class)
                 .setParameter("email", email)
                 .getResultStream()
                 .findFirst();
