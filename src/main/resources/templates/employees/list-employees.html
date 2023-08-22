@@ -12,8 +12,7 @@
 		<div class="container">
 			<h3>Employee Directory</h3>
 			<hr>
-			
-			<!--Add New Employee Button -->
+
 			<a th:href="@{/employees/new}"
 				class="btn btn-secondary btn-sm mb-3">
 				Add Employee
@@ -30,14 +29,14 @@
 					</tr>
 				</thead>		
 				<tbody>
-					<tr th:each="aEmployee : ${employees}">
-						<td th:text="${aEmployee.firstName}"/>
-						<td th:text="${aEmployee.lastName}"/>
-						<td th:text="${aEmployee.email}"/>
+					<tr th:each="tmpEmployee : ${employees}">
+						<td th:text="${tmpEmployee.getFirstName()}"/>
+						<td th:text="${tmpEmployee.getLastName()}"/>
+						<td th:text="${tmpEmployee.getEmail()}"/>
 						<td th:width="180">
-							<a th:href="@{/employees/update(empid=${aEmployee.employeeId})}"
+							<a th:href="@{/employees/update(email=${tmpEmployee.getEmail()})}"
 							   class="btn btn-outline-secondary btn-sm"> Update </a>
-							<a th:href="@{/employees/delete(empid=${aEmployee.employeeId})}"
+							<a th:href="@{/employees/delete(empid=${tmpEmployee.getId()})}"
 							   class="btn btn btn-outline-danger btn-sm"
 							   onClick="if (!(confirm('Are you sure you want to delete this employee?'))) return false"> Delete </a>
 						</td>

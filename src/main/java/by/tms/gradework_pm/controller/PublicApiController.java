@@ -2,6 +2,8 @@ package by.tms.gradework_pm.controller;
 
 import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
+import by.tms.gradework_pm.entity.Employee;
+import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.service.EmployeeService;
 import by.tms.gradework_pm.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +22,11 @@ public class PublicApiController {
     private final EmployeeService employeeService;
     private final ProjectService proService;
 
-    @GetMapping("/employees")
-    public String displayEmployees(Model model){
-        List<EmployeeDto> employees = employeeService.getAllEmployees();
-        model.addAttribute("employees", employees);
-        return "employees/list-employees";
-    }
+
 
     @GetMapping("/projects")
     public String displayProjects(Model model) {
-        List<ProjectDto> projects = proService.getAllProjects();
+        List<Project> projects = proService.getAllProjects();
         model.addAttribute("projects", projects);
         return "projects/list-projects";
     }

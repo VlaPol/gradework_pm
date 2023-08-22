@@ -16,7 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "employee")
-public class Employee extends BaseEntity {
+public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header"></head>
+
+<body>
+<nav th:replace="layouts :: navbar"> </nav>
+
+	<div class="container">
+		<form th:action="@{/projects/save}" th:object="${project}" method="POST">  <!--@{/projects/save} так записываем для использования токена, тогда отдельно прописывать токен не надо!-->
+			<h3>  Project card </h3>
+
+			<!-- Это поле необходимо, чтобы привязать форму при клике для случая UPDATE
+			Без этого поля вместо изменения существующей произойдет вставка новой записи-->
+			<input type="hidden" th:field="*{projectId}"/>
+<!--	Begin		-->
+			<table class="table" th:border="0">
+				<tbody>
+				<tr>
+					<th>Project</th>
+					<!-- Связыаем поле "Project Name" на форме с полем name объекта класса Project -->
+					<td><input type="text" placeholder="Project Name" th:field = "${project.name}"> </td>
+					<td><span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="${project.name}"> </span></td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td><textarea type="text" cols="38" placeholder="Enter Project Description" th:field = "${project.description}"></textarea> </td>
+					<td><span style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="${project.description}"> </span></td>
+				</tr>
+				<tr>
+					<th>Status</th>
+					<th>
+						<select th:field = "${project.stage}">
+							<option th:value="NOTSTARTED"> Not Started</option>
+							<option th:value="INPROGRESS"> In Progress</option>
+							<option th:value="COMPLETED"> Completed</option>
+						</select>
+					</th>
+				</tr>
+				<tr>
+					<!--Указанный ниже select создает окно прокрутки в котором можно выбрать рабочего
+					для выполнения проекта-->
+					<th> Workers </th>
+					<th>	<select th:field = "${project.employees}" multiple="multiple" size="3">
+							<option th:each="employee : ${allEmployees}"
+									th:value="${employee.employeeId}"
+									th:text="${employee.firstName}">
+
+							</option>
+						</select>
+					</th>
+				</tr>
+
+<!--				Time line code            -->
+				<tr>
+					<th> Start Date </th>
+					<th><input id="dp3" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy" th:field="${project.startDate}"></th>
+				</tr>
+				<tr>
+					<th> End Date </th>
+					<th> <input id="dp4" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy" th:field="${project.endDate}"> </th>
+				</tr>
+				<tr>
+				<script type="text/javascript">
+					$('#dp3').datepicker();
+					$('#dp4').datepicker();
+				</script>
+				</tr>
+<!--              END TIMELINE               -->
+				</tbody>
+			</table>
+
+
+<!--	End		-->
+		<!-- <input type="hidden" name=" _csrf" th:value="${_csrf.token}" />    Невидимое поле, токен для безопасности -->
+		<br>
+		<div class="d-grid gap-2 d-md-block">
+			<button class="btn btn-secondary me-md-2" type="submit">Create project</button>
+		</div>
+		</form>
+	</div>
+
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.repository;
 
+import by.tms.gradework_pm.entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
