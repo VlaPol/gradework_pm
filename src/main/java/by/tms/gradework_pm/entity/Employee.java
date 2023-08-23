@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -16,12 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "employee")
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Employee extends BaseEntity implements Serializable {
 
     @Column(name = "first_name")
     private String firstName;

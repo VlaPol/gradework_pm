@@ -29,15 +29,15 @@
 					</tr>
 				</thead>		
 				<tbody>
-					<tr th:each="aProject : ${projects}">
-						<td th:text="${aProject.getName()}"/>
-						<td th:text="${aProject.getStage()}"/>
-						<td th:text="${aProject.getStartDate()}"/>
-						<td th:text="${aProject.getEndDate()}"/>
+					<tr th:each="project : ${projects}">
+						<td th:text="${project.getName()}"/>
+						<td th:text="${project.getStage()}"/>
+						<td th:text="${project.getStartDate()}"/>
+						<td th:text="${project.getEndDate()}"/>
 						<td th:width="180">
-							<a th:href="@{/projects/update(projectid=${aProject.projectId})}"
+							<a th:href="@{/projects/update(projectid=${project.id})}"
 							   class="btn btn-outline-secondary btn-sm"> Update </a>
-							<a th:href="@{/projects/delete(projectid=${aProject.projectId})}"
+							<a th:href="@{/projects/delete(projectid=${project.id})}"
 							   class="btn btn btn-outline-danger btn-sm"
 							   onclick="if(!(confirm('Are you sure to delete this employee?'))) return false"> Delete </a>
 						</td>

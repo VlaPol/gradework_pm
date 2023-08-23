@@ -14,7 +14,7 @@ public interface ProjectService {
 
     void saveNewProject(Project project);
 
-    List<ProjectDto> getAllProjects();
+    List<Project> getAllProjects();
 
     void removeProject(Long id);
 

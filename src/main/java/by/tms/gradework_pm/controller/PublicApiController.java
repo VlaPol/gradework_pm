@@ -15,19 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/public")
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class PublicApiController {
 
-    private final EmployeeService employeeService;
-    private final ProjectService proService;
-
-
-
-    @GetMapping("/projects")
-    public String displayProjects(Model model) {
-        List<Project> projects = proService.getAllProjects();
-        model.addAttribute("projects", projects);
-        return "projects/list-projects";
+    @GetMapping
+    public String getMainPage(Model model){
+        return "main/home";
     }
+
+
 }
