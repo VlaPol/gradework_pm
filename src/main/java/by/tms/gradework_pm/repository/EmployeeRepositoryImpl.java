@@ -22,6 +22,16 @@ public class EmployeeRepositoryImpl
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public void update(Employee employee){
+        Long id = employee.getId();
+        Employee entity = entityManager.find(Employee.class, id);
+        entity.setFirstName(employee.getFirstName());
+        entity.setLastName(employee.getLastName());
+        entity.setEmail(employee.getEmail());
+        entityManager.persist(entity);
+    }
+
     public List<EmployeeProjectsCountDto> countEmployeeProjects() {
 
         final String sql = """
@@ -42,31 +52,32 @@ public class EmployeeRepositoryImpl
     }
 
     @Override
-    public List<EmployeeDto> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
 
         final String sql = """
-                            SELECT e.first_name, e.last_name,
+                            SELECT e.id, e.first_name, e.last_name,
                             e.email
                             FROM employee e
                             ORDER BY e.last_name DESC
                         """;
 
         return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
-            EmployeeDto dto = new EmployeeDto();
+            Employee dto = new Employee();
+            dto.setId(rs.getLong("ID"));
             dto.setFirstName (rs.getString("FIRST_NAME"));
             dto.setLastName(rs.getString("LAST_NAME"));
-            dto.setEmail(rs.getString("email"));
+            dto.setEmail(rs.getString("EMAIL"));
             return dto;
         }));
     }
 
     @Override
-    public Optional<EmployeeDto> findByEmail(String email) {
+    public Optional<Employee> findByEmail(String email) {
         return entityManager.createQuery("""
                         SELECT emp
                         FROM Employee emp
                         WHERE lower(emp.email) = lower(:email)
-                        """, EmployeeDto.class)
+                        """, Employee.class)
                 .setParameter("email", email)
                 .getResultStream()
                 .findFirst();

@@ -1,11 +1,19 @@
 package by.tms.gradework_pm.dto.project;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.Instant;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class ProjectDto {
     private String name;
-    private String description;
     private String stage;
-    private Date startDate;
-    private Date endDate;
+    private Instant startDate;
+    private Instant endDate;
 }

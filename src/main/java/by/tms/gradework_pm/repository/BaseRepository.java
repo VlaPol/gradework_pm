@@ -1,5 +1,7 @@
 package by.tms.gradework_pm.repository;
 
+import by.tms.gradework_pm.entity.Employee;
+
 import java.util.Optional;
 
 public interface BaseRepository<E, ID> {
@@ -9,4 +11,6 @@ public interface BaseRepository<E, ID> {
     void create(E entity);
 
     void remove(ID id);
+
+    void update(E entity);
 }

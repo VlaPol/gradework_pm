@@ -5,6 +5,7 @@ import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.exception.BusinessException;
 import by.tms.gradework_pm.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +15,43 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService{
 
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Override
+    @Transactional
     public void createNewEmployee(Employee employee) {
         employeeRepository.create(employee);
     }
 
     @Override
-    public List<EmployeeDto> getAllEmployees() {
+    @Transactional
+    public List<Employee> getAllEmployees() {
         return employeeRepository.getAllEmployees();
     }
 
     @Override
+    @Transactional
     public List<EmployeeProjectsCountDto> getEmployeeWithProjectsCount() {
         return employeeRepository.countEmployeeProjects();
     }
 
     @Override
-    public EmployeeDto findByEmail(String email) throws BusinessException {
+    @Transactional
+    public Employee findByEmail(String email) throws BusinessException {
         return employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException("Такого работника не существует"));
+                .orElseThrow(() -> new BusinessException(""));
     }
 
     @Override
+    @Transactional
     public void deleteEmployee(Long id) {
         employeeRepository.remove(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateEmployee(Employee employee) {
+        employeeRepository.update(employee);
     }
 
 }

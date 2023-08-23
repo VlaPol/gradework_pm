@@ -11,13 +11,14 @@ public interface EmployeeService {
 
     void createNewEmployee(Employee employee);
 
-    List<EmployeeDto> getAllEmployees();
+    List<Employee> getAllEmployees();
 
     List<EmployeeProjectsCountDto> getEmployeeWithProjectsCount();
 
 
-    EmployeeDto findByEmail(String email) throws BusinessException;
-
+    Employee findByEmail(String email) throws BusinessException;
 
     void deleteEmployee(Long id);
+
+    void updateEmployee(Employee employee);
 }

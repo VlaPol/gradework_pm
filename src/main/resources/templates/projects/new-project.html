@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="layouts :: header"><title>
+    Project
+</title>
+</head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/projects/save}" th:object="${project}" method="POST">
+        <h3> Project card </h3>
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <table class="table" th:border="0">
+            <tbody>
+            <tr>
+                <th>Project</th>
+                <td><input type="text" placeholder="Project Name" th:field="${project.name}"></td>
+                <td><span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="${project.name}"> </span>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td><textarea type="text" cols="38" placeholder="Enter Project Description"
+                              th:field="${project.description}"></textarea></td>
+                <td><span style="color: red" th:if="${#fields.hasErrors('description')}"
+                          th:errors="${project.description}"> </span></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <th>
+                    <select name="stages" th:field="${project.stage}">
+                        <option th:each="stage : ${T(by.tms.gradework_pm.entity.Stage).values()}"
+                                th:value="${stage.getDisplayStage()}"
+                                th:text="${stage.getDisplayStage()}">
+
+                        </option>
+                    </select>
+                </th>
+            </tr>
+            <tr>
+
+                <th> Workers</th>
+                <th>
+                    <select th:field="*{employees}" multiple="multiple">
+                        <option th:each="employee : ${allEmployees}"
+                                th:value="${{employee.id}}"
+                                th:text="${employee.lastName}">
+                        </option>
+                    </select>
+                </th>
+            </tr>
+            <tr>
+                <th> Start Date</th>
+                <th><input id="dp3" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
+                           th:field="${project.startDate}"></th>
+            </tr>
+            <tr>
+                <th> End Date</th>
+                <th><input id="dp4" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
+                           th:field="${project.endDate}"></th>
+            </tr>
+            <tr>
+                <script type="text/javascript">
+                    $('#dp3').datepicker();
+                    $('#dp4').datepicker();
+                </script>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-secondary me-md-2" type="submit">Create project</button>
+        </div>
+    </form>
+
+</div>
+
+</body>
+
+</html>

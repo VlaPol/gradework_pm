@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface EmployeeRepository extends BaseRepository<Employee, Long> {
     List<EmployeeProjectsCountDto> countEmployeeProjects();
 
-    List<EmployeeDto> getAllEmployees();
+    List<Employee> getAllEmployees();
 
-    Optional<EmployeeDto> findByEmail(String email);
+    Optional<Employee> findByEmail(String email);
 }
