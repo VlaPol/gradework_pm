@@ -35,16 +35,17 @@ public class EmployeeRepositoryImpl
     public List<EmployeeProjectsCountDto> countEmployeeProjects() {
 
         final String sql = """
-                            SELECT e.first_name, e.last_name,
+                            SELECT e.first_name, e.last_name, e.email,
                             count(pe.project_id) as projectCount
                             FROM employee e LEFT JOIN project_emp pe on(e.id = pe.employee_id)
-                            GROUP BY e.first_name, e.last_name ORDER BY projectCount DESC
+                            GROUP BY e.first_name, e.last_name, e.email ORDER BY projectCount DESC
                         """;
 
         return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
             EmployeeProjectsCountDto dto = new EmployeeProjectsCountDto();
             dto.setFirstName (rs.getString("FIRST_NAME"));
             dto.setLastName(rs.getString("LAST_NAME"));
+            dto.setEmail(rs.getString("EMAIL"));
             dto.setProjectCount(rs.getInt("projectCount"));
             return dto;
         }));

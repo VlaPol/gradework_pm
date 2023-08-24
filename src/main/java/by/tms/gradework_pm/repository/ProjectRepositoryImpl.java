@@ -67,7 +67,7 @@ public class ProjectRepositoryImpl
     public List<Project> findAllProjects() {
 
         final String sql = """
-                    SELECT p.name, p.stage,
+                    SELECT p.id, p.name, p.stage,
                      p.start_date, p.end_date
                     FROM project p
                     ORDER BY p.name
@@ -78,8 +78,8 @@ public class ProjectRepositoryImpl
             dto.setId(rs.getLong("ID"));
             dto.setName(rs.getString("NAME"));
             dto.setStage(rs.getString("STAGE"));
-            dto.setStartDate(Date.from(rs.getDate("START_DATE").toInstant()));
-            dto.setEndDate(Date.from(rs.getDate("END_DATE").toInstant()));
+            dto.setStartDate(rs.getDate("START_DATE"));
+            dto.setEndDate(rs.getDate("END_DATE"));
             return dto;
         }));
     }

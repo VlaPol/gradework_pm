@@ -15,5 +15,4 @@ public interface ProjectRepository extends BaseRepository<Project, Long> {
 
     List<Project> findAllProjects();
 
-
 }

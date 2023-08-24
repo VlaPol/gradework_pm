@@ -1,6 +1,7 @@
 package by.tms.gradework_pm.controller;
 
 import by.tms.gradework_pm.dto.employee.EmployeeDto;
+import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.entity.Project;
@@ -19,8 +20,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PublicApiController {
 
+    private final EmployeeService employeeService;
+    private final ProjectService projectService;
+
     @GetMapping
     public String getMainPage(Model model){
+
+        List<Project> projectList = projectService.getAllProjects();
+        List<EmployeeProjectsCountDto> employeesList = employeeService.getEmployeeWithProjectsCount();
+
+        model.addAttribute("projectsList", projectList);
+        model.addAttribute("employeesList", employeesList);
+
         return "main/home";
     }
 

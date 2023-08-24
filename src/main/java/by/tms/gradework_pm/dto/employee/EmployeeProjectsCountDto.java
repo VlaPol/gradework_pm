@@ -9,5 +9,6 @@ import lombok.*;
 public class EmployeeProjectsCountDto {
     String firstName;
     String lastName;
+    String email;
     int projectCount;
 }
