@@ -1,18 +1,22 @@
 package by.tms.gradework_pm.service;
 
+import by.tms.gradework_pm.dto.project.ActivProjectsDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.entity.Stage;
 import by.tms.gradework_pm.exception.BusinessException;
 import by.tms.gradework_pm.repository.ProjectRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
@@ -41,7 +45,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDto> findOpenProjectsByDate(Instant date) {
+    public List<ActivProjectsDto> findOpenProjectsByDate() {
+
+        Date date = Date.from(Instant.now());
         return projectRepository.findOpenProjectsByDate(date);
     }
 
@@ -49,4 +55,5 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDto> findAllProjectsByStage(Stage stage) {
         return projectRepository.findAllByStage(stage);
     }
+
 }

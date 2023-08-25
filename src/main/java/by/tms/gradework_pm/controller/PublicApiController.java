@@ -1,9 +1,6 @@
 package by.tms.gradework_pm.controller;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
-import by.tms.gradework_pm.dto.project.ProjectDto;
-import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.service.EmployeeService;
 import by.tms.gradework_pm.service.ProjectService;

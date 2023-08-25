@@ -48,28 +48,23 @@
                 <th> Workers</th>
                 <th>
                     <select th:field="*{employees}" multiple="multiple">
-                        <option th:each="employee : ${allEmployees}"
-                                th:value="${{employee.id}}"
+                        <option th:each="employee : *{employees}"
+                                th:value="${employee.id}"
                                 th:text="${employee.lastName}">
                         </option>
                     </select>
+
                 </th>
             </tr>
             <tr>
                 <th> Start Date</th>
-                <th><input id="dp3" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
+                <th><input id="startdate" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
                            th:field="${project.startDate}"></th>
             </tr>
             <tr>
                 <th> End Date</th>
-                <th><input id="dp4" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
+                <th><input id="enddate" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
                            th:field="${project.endDate}"></th>
-            </tr>
-            <tr>
-                <script type="text/javascript">
-                    $('#dp3').datepicker();
-                    $('#dp4').datepicker();
-                </script>
             </tr>
             </tbody>
         </table>
@@ -77,6 +72,14 @@
         <div class="d-grid gap-2 d-md-block">
             <button class="btn btn-secondary me-md-2" type="submit">Create project</button>
         </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#startdate').datepicker({dateFormat: "dd/mm/yy"}).val();
+                $('#enddate').datepicker({dateFormat: "dd/mm/yy"}).val();
+            });
+        </script>
+
     </form>
 
 </div>

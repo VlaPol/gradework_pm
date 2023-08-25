@@ -1,6 +1,5 @@
 package by.tms.gradework_pm.repository;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.entity.Employee;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -82,5 +81,10 @@ public class EmployeeRepositoryImpl
                 .setParameter("email", email)
                 .getResultStream()
                 .findFirst();
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesById(List<Long> id) {
+        return null;
     }
 }

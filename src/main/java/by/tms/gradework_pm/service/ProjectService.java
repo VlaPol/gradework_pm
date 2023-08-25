@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.service;
 
+import by.tms.gradework_pm.dto.project.ActivProjectsDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.entity.Stage;
@@ -18,7 +19,7 @@ public interface ProjectService {
 
     void removeProject(Long id);
 
-    List<ProjectDto> findOpenProjectsByDate(Instant date);
+    List<ActivProjectsDto> findOpenProjectsByDate();
 
     List<ProjectDto> findAllProjectsByStage(Stage stage);
 }

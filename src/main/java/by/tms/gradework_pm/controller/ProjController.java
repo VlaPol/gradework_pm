@@ -1,7 +1,6 @@
 package by.tms.gradework_pm.controller;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
-import by.tms.gradework_pm.dto.project.ProjectDto;
+import by.tms.gradework_pm.dto.project.ActivProjectsDto;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.exception.BusinessException;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,20 +33,17 @@ public class ProjController {
     @GetMapping("/new")
     public String displayProjectForm(Model model){
 
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("allEmployees", employees);
-
         Project project = new Project();
+        List<Employee> employees = employeeService.getAllEmployees();
+        project.setEmployees(employees);
         model.addAttribute("project", project);
+        model.addAttribute("employees", employees);
 
         return "projects/new-project";
     }
 
     @PostMapping(value = "/save")
-    public String createProject(@ModelAttribute("project") Project project,
-                                 BindingResult bindingResult,
-                                @ModelAttribute("allEmployees") Employee employee,
-                                Model model){
+    public String createProject(Project project, BindingResult bindingResult, Model model){
 
         try {
             projectService.saveNewProject(project);
@@ -64,11 +59,12 @@ public class ProjController {
     public String displayProjUpdateForm(@RequestParam("id") Long id, Model model){
 
         List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("allEmployees", employees);
+        model.addAttribute("employees", employees);
 
         Project project = null;
         try {
             project = projectService.findById(id);
+            project.setEmployees(employees);
             model.addAttribute("project", project);
             return "projects/new-project";
         } catch (BusinessException e) {
@@ -87,6 +83,17 @@ public class ProjController {
         }catch (BusinessException e) {
             return "error";
         }
+    }
+
+    @GetMapping("/active")
+    public String getActiveProjects(Model model){
+
+        List<ActivProjectsDto> openProjectsByDate = projectService.findOpenProjectsByDate();
+
+        model.addAttribute("openProjects",openProjectsByDate);
+
+        return "projects/activ-projects";
+
     }
 
 
