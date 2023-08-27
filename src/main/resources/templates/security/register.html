@@ -11,22 +11,24 @@
 <div style="background-color: #283238; height: 50px;"></div>
 <div class="container-fluid" style="margin-top: 30px;">
 
-    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
-        <form autocomplete="off" th:action="@{/register/save}" th:object="${userAccount}" method="post" class="form-signin" role="form">
+    <div class="row col-lg-4 col-lg-offset-4"
+         style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+        <form autocomplete="off" th:action="@{/register/save}" th:object="${userAccount}" method="post"
+              class="form-signin" role="form">
             <h3 class="form-signin-heading">Registration Form</h3>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control" />
+                    <input type="text" th:field="*{userName}" placeholder="User Name" class="form-control"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control" />
+                    <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="">
-                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control" />
+                    <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/>
                 </div>
             </div>
 

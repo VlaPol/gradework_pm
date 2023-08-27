@@ -2,10 +2,7 @@ package by.tms.gradework_pm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -34,8 +31,8 @@ public class Project extends BaseEntity implements Serializable {
             CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     @JoinTable(name = "project_emp",
-                        joinColumns = @JoinColumn(name = "project_id"),
-                        inverseJoinColumns = @JoinColumn(name = "employee_id"))
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
     @JsonIgnore
     private List<Employee> employees;
 }

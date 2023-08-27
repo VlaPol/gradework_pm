@@ -24,9 +24,9 @@ public class Employee extends BaseEntity implements Serializable {
     private String email;
 
     @ManyToMany(cascade = {CascadeType.DETACH,
-                         CascadeType.MERGE,
-                         CascadeType.REFRESH,
-                         CascadeType.PERSIST},
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     @JoinTable(name = "project_emp",
             joinColumns = @JoinColumn(name = "employee_id"),

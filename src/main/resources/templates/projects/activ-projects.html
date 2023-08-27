@@ -2,39 +2,39 @@
 
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-	<head th:replace="layouts :: head">
-		<title>Projects</title>
-	</head>
-	
-	<body>
-	
-	<nav th:replace="layouts :: navbar"></nav>
+<head th:replace="layouts :: head">
+    <title>Projects</title>
+</head>
 
-		<div class="container">
-			<h3>Projects in action</h3>
-			<hr>
+<body>
 
-			<table class="table table-bordered table-striped">
-				<thead class="thead-dark">
-					<tr>
-						<th>Project Name</th>
-						<th>Project Begin</th>
-						<th>Project End</th>
-						<th>Employers</th>
-					</tr>
-				</thead>		
-				<tbody>
-					<tr th:each="project : ${openProjects}">
-						<td th:text="${project.getName()}"/>
-						<td th:text="${project.getDateBegin}"/>
-						<td th:text="${project.getDateEnd()}"/>
-						<td th:text="${project.getEmployee()}"/>
-					</tr>
-				</tbody>
-			
-			</table>
-		</div>
+<nav th:replace="layouts :: navbar"></nav>
 
-	</body>
-	
+<div class="container">
+    <h3>Projects in action</h3>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Project Name</th>
+            <th>Project Begin</th>
+            <th>Project End</th>
+            <th>Employers</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${openProjects}">
+            <td th:text="${project.getName()}"/>
+            <td th:text="${project.getDateBegin}"/>
+            <td th:text="${project.getDateEnd()}"/>
+            <td th:text="${project.getEmployee()}"/>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+
 </html>

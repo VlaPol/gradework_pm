@@ -1,6 +1,5 @@
 package by.tms.gradework_pm.service;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.exception.BusinessException;
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 

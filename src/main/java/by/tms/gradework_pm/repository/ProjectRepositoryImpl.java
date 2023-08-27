@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.repository;
 
+import by.tms.gradework_pm.dto.ChartDate;
 import by.tms.gradework_pm.dto.project.ActivProjectsDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
 import by.tms.gradework_pm.entity.Project;
@@ -27,14 +28,12 @@ public class ProjectRepositoryImpl
     }
 
     @Override
-    public void update(Project project){
+    public void update(Project project) {
         Long id = project.getId();
         Project entity = entityManager.find(Project.class, id);
-        project.setName(project.getName());
-        project.setDescription(project.getDescription());
-        project.setStage(project.getStage());
-        project.setStartDate(project.getStartDate());
-        project.setEndDate(project.getEndDate());
+        entity.setName(project.getName());
+        entity.setDescription(project.getDescription());
+        entity.setStage(project.getStage());
         entityManager.persist(entity);
     }
 
@@ -44,13 +43,13 @@ public class ProjectRepositoryImpl
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         final String sql = """
-                SELECT p.name, p.start_date,
+                SELECT p.id, p.name, p.start_date,
                 p.end_date, e.last_name
                 FROM project p
                 LEFT JOIN project_emp pe ON pe.project_id = p.id
                 LEFT JOIN employee e ON e.id = pe.employee_id
-                WHERE p.end_date::date > (:date)
-                GROUP BY p.name, p.start_date,
+                WHERE p.end_date::date > (:date) AND p.start_date::date < (:date)
+                GROUP BY p.id, p.name, p.start_date,
                 p.end_date, e.last_name
                 ORDER BY p.end_date DESC
                 """;
@@ -59,9 +58,10 @@ public class ProjectRepositoryImpl
 
         return jdbcTemplate.query(sql, parametr, (rs, rowNum) -> {
             ActivProjectsDto dto = new ActivProjectsDto();
+            dto.setId(rs.getLong("ID"));
             dto.setName(rs.getString("NAME"));
-            dto.setDateBegin (format.format(rs.getDate("START_DATE")));
-            dto.setDateEnd (format.format(rs.getDate("END_DATE")));
+            dto.setDateBegin(format.format(rs.getDate("START_DATE")));
+            dto.setDateEnd(format.format(rs.getDate("END_DATE")));
             dto.setEmployee(rs.getString("LAST_NAME"));
             return dto;
         });
@@ -91,6 +91,22 @@ public class ProjectRepositoryImpl
                         ORDER BY p.name
                         """, Project.class)
                 .getResultList();
-        
+
+    }
+
+    public List<ChartDate> getProjectStatus() {
+
+        final String sql = """
+                SELECT stage as label,
+                count(stage) as value FROM project
+                GROUP BY stage
+                """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            ChartDate dto = new ChartDate();
+            dto.setLabel(rs.getString("label"));
+            dto.setValue(rs.getLong("value"));
+            return dto;
+        });
     }
 }

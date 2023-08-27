@@ -7,9 +7,8 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class ActivProjectsDto {
+public class ReturnedActivProjectsDto {
 
-    private Long id;
     private String name;
     private String dateBegin;
     private String dateEnd;

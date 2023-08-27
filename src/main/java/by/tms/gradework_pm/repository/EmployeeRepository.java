@@ -10,7 +10,6 @@ public interface EmployeeRepository extends BaseRepository<Employee, Long> {
     List<EmployeeProjectsCountDto> countEmployeeProjects();
 
     List<Employee> getAllEmployees();
-    List<Employee> getAllEmployeesById(List<Long> id);
 
     Optional<Employee> findByEmail(String email);
 }
