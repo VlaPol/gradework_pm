@@ -1,14 +1,16 @@
 package by.tms.gradework_pm.repository;
 
+import by.tms.gradework_pm.dto.ChartDate;
+import by.tms.gradework_pm.dto.project.ActivProjectsDto;
 import by.tms.gradework_pm.dto.project.ProjectDto;
-import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.entity.Stage;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import java.time.Instant;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,26 +28,43 @@ public class ProjectRepositoryImpl
     }
 
     @Override
-    public void update(Project project){
+    public void update(Project project) {
         Long id = project.getId();
         Project entity = entityManager.find(Project.class, id);
-        project.setName(project.getName());
-        project.setDescription(project.getDescription());
-        project.setStage(project.getStage());
-        project.setStartDate(project.getStartDate());
-        project.setEndDate(project.getEndDate());
+        entity.setName(project.getName());
+        entity.setDescription(project.getDescription());
+        entity.setStage(project.getStage());
         entityManager.persist(entity);
     }
 
     @Override
-    public List<ProjectDto> findOpenProjectsByDate(Instant date) {
-        return entityManager.createQuery("""
-                        SELECT p.name, p.description,
-                            p.stage, p.startDate, p.endDate
-                            FROM Project p ORDER BY p.startDate
-                        """, ProjectDto.class)
-                .getResultStream()
-                .collect(Collectors.toList());
+    public List<ActivProjectsDto> findOpenProjectsByDate(Date date) {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        final String sql = """
+                SELECT p.id, p.name, p.start_date,
+                p.end_date, e.last_name
+                FROM project p
+                LEFT JOIN project_emp pe ON pe.project_id = p.id
+                LEFT JOIN employee e ON e.id = pe.employee_id
+                WHERE p.end_date::date > (:date) AND p.start_date::date < (:date)
+                GROUP BY p.id, p.name, p.start_date,
+                p.end_date, e.last_name
+                ORDER BY p.end_date DESC
+                """;
+
+        SqlParameterSource parametr = new MapSqlParameterSource("date", date);
+
+        return jdbcTemplate.query(sql, parametr, (rs, rowNum) -> {
+            ActivProjectsDto dto = new ActivProjectsDto();
+            dto.setId(rs.getLong("ID"));
+            dto.setName(rs.getString("NAME"));
+            dto.setDateBegin(format.format(rs.getDate("START_DATE")));
+            dto.setDateEnd(format.format(rs.getDate("END_DATE")));
+            dto.setEmployee(rs.getString("LAST_NAME"));
+            return dto;
+        });
     }
 
     @Override
@@ -66,21 +85,28 @@ public class ProjectRepositoryImpl
     @Override
     public List<Project> findAllProjects() {
 
+        return entityManager.createQuery("""
+                        SELECT p
+                        FROM Project p
+                        ORDER BY p.name
+                        """, Project.class)
+                .getResultList();
+
+    }
+
+    public List<ChartDate> getProjectStatus() {
+
         final String sql = """
-                    SELECT p.name, p.stage,
-                     p.start_date, p.end_date
-                    FROM project p
-                    ORDER BY p.name
+                SELECT stage as label,
+                count(stage) as value FROM project
+                GROUP BY stage
                 """;
 
-        return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Project dto = new Project();
-            dto.setId(rs.getLong("ID"));
-            dto.setName(rs.getString("NAME"));
-            dto.setStage(rs.getString("STAGE"));
-            dto.setStartDate(Date.from(rs.getDate("START_DATE").toInstant()));
-            dto.setEndDate(Date.from(rs.getDate("END_DATE").toInstant()));
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            ChartDate dto = new ChartDate();
+            dto.setLabel(rs.getString("label"));
+            dto.setValue(rs.getLong("value"));
             return dto;
-        }));
+        });
     }
 }

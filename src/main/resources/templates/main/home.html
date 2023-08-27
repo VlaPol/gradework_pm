@@ -35,38 +35,49 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="col-md-4">
+            <canvas id="myDoughCHart" height="60" width="60"></canvas>
+
+            <script>
+                const charData = "[[${projectStatusCnt}]]";
+            </script>
+
+        </div>
+
     </div>
+</div>
 
 
-    <div>
-        <hr>
-        <h4>Employees</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table table-border table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Email Address</th>
-                        <th>Number of Projects</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="emp : ${employeesList}">
-                        <td th:text="${emp.firstName}"></td>
-                        <td th:text="${emp.lastName}"></td>
-                        <td th:text="${emp.email}"></td>
-                        <td th:text="${emp.projectCount}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="container">
+    <hr>
+    <h4>Employees</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-border table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email Address</th>
+                    <th>Number of Projects</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="emp : ${employeesList}">
+                    <td th:text="${emp.firstName}"></td>
+                    <td th:text="${emp.lastName}"></td>
+                    <td th:text="${emp.email}"></td>
+                    <td th:text="${emp.projectCount}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
 </div>
+
 <footer th:replace="layouts :: footer"></footer>
 
+<script type="text/javascript" th:src="@{js/myChart.js}"></script>
 </body>
 </html>

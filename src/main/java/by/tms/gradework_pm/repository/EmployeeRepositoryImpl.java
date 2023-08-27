@@ -1,6 +1,5 @@
 package by.tms.gradework_pm.repository;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
 import by.tms.gradework_pm.dto.employee.EmployeeProjectsCountDto;
 import by.tms.gradework_pm.entity.Employee;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -23,7 +22,7 @@ public class EmployeeRepositoryImpl
     }
 
     @Override
-    public void update(Employee employee){
+    public void update(Employee employee) {
         Long id = employee.getId();
         Employee entity = entityManager.find(Employee.class, id);
         entity.setFirstName(employee.getFirstName());
@@ -35,16 +34,17 @@ public class EmployeeRepositoryImpl
     public List<EmployeeProjectsCountDto> countEmployeeProjects() {
 
         final String sql = """
-                            SELECT e.first_name, e.last_name,
-                            count(pe.project_id) as projectCount
-                            FROM employee e LEFT JOIN project_emp pe on(e.id = pe.employee_id)
-                            GROUP BY e.first_name, e.last_name ORDER BY projectCount DESC
-                        """;
+                    SELECT e.first_name, e.last_name, e.email,
+                    count(pe.project_id) as projectCount
+                    FROM employee e LEFT JOIN project_emp pe on(e.id = pe.employee_id)
+                    GROUP BY e.first_name, e.last_name, e.email ORDER BY projectCount DESC
+                """;
 
         return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
             EmployeeProjectsCountDto dto = new EmployeeProjectsCountDto();
-            dto.setFirstName (rs.getString("FIRST_NAME"));
+            dto.setFirstName(rs.getString("FIRST_NAME"));
             dto.setLastName(rs.getString("LAST_NAME"));
+            dto.setEmail(rs.getString("EMAIL"));
             dto.setProjectCount(rs.getInt("projectCount"));
             return dto;
         }));
@@ -55,16 +55,16 @@ public class EmployeeRepositoryImpl
     public List<Employee> getAllEmployees() {
 
         final String sql = """
-                            SELECT e.id, e.first_name, e.last_name,
-                            e.email
-                            FROM employee e
-                            ORDER BY e.last_name DESC
-                        """;
+                    SELECT e.id, e.first_name, e.last_name,
+                    e.email
+                    FROM employee e
+                    ORDER BY e.last_name DESC
+                """;
 
         return new ArrayList<>(jdbcTemplate.query(sql, (rs, rowNum) -> {
             Employee dto = new Employee();
             dto.setId(rs.getLong("ID"));
-            dto.setFirstName (rs.getString("FIRST_NAME"));
+            dto.setFirstName(rs.getString("FIRST_NAME"));
             dto.setLastName(rs.getString("LAST_NAME"));
             dto.setEmail(rs.getString("EMAIL"));
             return dto;

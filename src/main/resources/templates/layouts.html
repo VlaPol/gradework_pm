@@ -34,11 +34,12 @@
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <!--    DATE TIME PICKER    -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <title></title>
 
 
@@ -65,12 +66,15 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/projects}">Projects</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/projects/active}">Active Projects</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<footer th:fragment="footer" class="text-center text-md-start bg-dark text-muted fixed-bottom" >
+<footer th:fragment="footer" class="text-center text-md-start bg-dark text-muted" >
     <section>
         <br>
     </section>

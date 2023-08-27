@@ -1,7 +1,7 @@
 package by.tms.gradework_pm.controller;
 
-import by.tms.gradework_pm.dto.employee.EmployeeDto;
-import by.tms.gradework_pm.dto.project.ProjectDto;
+import by.tms.gradework_pm.dto.project.ProjectDtoWithStringDate;
+import by.tms.gradework_pm.dto.project.ReturnedActivProjectsDto;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.exception.BusinessException;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,28 +26,25 @@ public class ProjController {
 
     @GetMapping("")
     public String displayProjects(Model model) {
-        List<Project> projects = projectService.getAllProjects();
+        List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
         return "projects/list-projects";
     }
 
     @GetMapping("/new")
-    public String displayProjectForm(Model model){
-
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("allEmployees", employees);
+    public String displayProjectForm(Model model) {
 
         Project project = new Project();
+        List<Employee> employees = employeeService.getAllEmployees();
+        project.setEmployees(employees);
         model.addAttribute("project", project);
+        model.addAttribute("employees", employees);
 
         return "projects/new-project";
     }
 
     @PostMapping(value = "/save")
-    public String createProject(@ModelAttribute("project") Project project,
-                                 BindingResult bindingResult,
-                                @ModelAttribute("allEmployees") Employee employee,
-                                Model model){
+    public String createProject(Project project, BindingResult bindingResult, Model model) {
 
         try {
             projectService.saveNewProject(project);
@@ -61,32 +57,54 @@ public class ProjController {
     }
 
     @GetMapping("/update")
-    public String displayProjUpdateForm(@RequestParam("id") Long id, Model model){
+    public String displayProjUpdateForm(@RequestParam("id") Long id,
+                                        @ModelAttribute("project") Project project,
+                                        Model model) {
 
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("allEmployees", employees);
+        final String MESSAGE = "Возникла ошибка при обновлении информации по проекту";
 
-        Project project = null;
         try {
-            project = projectService.findById(id);
-            model.addAttribute("project", project);
-            return "projects/new-project";
+            Project tmpProject = projectService.findById(id);
+            model.addAttribute("project", tmpProject);
+            return "projects/update-project";
         } catch (BusinessException e) {
-            return "error";
+            model.addAttribute("message", MESSAGE);
+            return "errorpages/error";
         }
+    }
+
+    @PostMapping("/update")
+    public String updateProject(@ModelAttribute("project") Project project,
+                                Model model) {
+
+        final String MESSAGE = "Возникла ошибка при обновлении информации по проекту";
+
+        projectService.updateProject(project);
+        return "redirect:/projects";
 
     }
 
     @GetMapping("/delete")
-    public String deleteProject(@RequestParam("id") Long id, Model model){
+    public String deleteProject(@RequestParam("id") Long id, Model model) {
 
         try {
             Project proj = projectService.findById(id);
             projectService.removeProject(id);
             return "redirect:/projects";
-        }catch (BusinessException e) {
+        } catch (BusinessException e) {
             return "error";
         }
+    }
+
+    @GetMapping("/active")
+    public String getActiveProjects(Model model) {
+
+        List<ReturnedActivProjectsDto> openProjectsByDate = projectService.findOpenProjectsByDate();
+
+        model.addAttribute("openProjects", openProjectsByDate);
+
+        return "projects/activ-projects";
+
     }
 
 

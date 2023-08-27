@@ -2,10 +2,7 @@ package by.tms.gradework_pm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,9 +24,9 @@ public class Employee extends BaseEntity implements Serializable {
     private String email;
 
     @ManyToMany(cascade = {CascadeType.DETACH,
-                         CascadeType.MERGE,
-                         CascadeType.REFRESH,
-                         CascadeType.PERSIST},
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST},
             fetch = FetchType.LAZY)
     @JoinTable(name = "project_emp",
             joinColumns = @JoinColumn(name = "employee_id"),

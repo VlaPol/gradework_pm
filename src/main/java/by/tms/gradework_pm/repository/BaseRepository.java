@@ -1,6 +1,5 @@
 package by.tms.gradework_pm.repository;
 
-import by.tms.gradework_pm.entity.Employee;
 
 import java.util.Optional;
 

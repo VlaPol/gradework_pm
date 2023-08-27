@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="layouts :: header">
+    <title>New Project</title>
+</head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/projects/update}" th:object="${project}" method="post">
+        <h3> Project card </h3>
+        <input type="hidden" th:field="*{id}"/>
+
+        <table class="table" th:border="0">
+            <tbody>
+
+            <tr>
+                <th>Name</th>
+                <td><input type="text" placeholder="Project name" th:field="*{name}"></td>
+                <td><span style="color: red" th:if="${#fields.hasErrors('name')}"
+                          th:errors="${project.name}"> </span></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td><input type="text" placeholder="Last Name" th:field="*{description}"></td>
+                <td><span style="color: red" th:if="${#fields.hasErrors('description')}"
+                          th:errors="${project.description}"> </span></td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <th>
+                    <select name="stages" th:field="${project.stage}">
+                        <option th:each="stage : ${T(by.tms.gradework_pm.entity.Stage).values()}"
+                                th:value="${stage.getDisplayStage()}"
+                                th:text="${stage.getDisplayStage()}">
+
+                        </option>
+                    </select>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <form th:action="@{/projects/update}" th:object="${project}" method="post">
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-secondary me-md-2" type="submit">Update project</button>
+            </div>
+        </form>
+    </form>
+</div>
+
+</body>
+
+</html>

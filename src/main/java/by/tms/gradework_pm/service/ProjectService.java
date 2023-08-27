@@ -1,11 +1,11 @@
 package by.tms.gradework_pm.service;
 
-import by.tms.gradework_pm.dto.project.ProjectDto;
+import by.tms.gradework_pm.dto.ChartDate;
+import by.tms.gradework_pm.dto.project.ProjectDtoWithStringDate;
+import by.tms.gradework_pm.dto.project.ReturnedActivProjectsDto;
 import by.tms.gradework_pm.entity.Project;
-import by.tms.gradework_pm.entity.Stage;
 import by.tms.gradework_pm.exception.BusinessException;
 
-import java.time.Instant;
 import java.util.List;
 
 public interface ProjectService {
@@ -14,11 +14,14 @@ public interface ProjectService {
 
     void saveNewProject(Project project);
 
-    List<Project> getAllProjects();
+    List<ProjectDtoWithStringDate> getAllProjects();
 
     void removeProject(Long id);
 
-    List<ProjectDto> findOpenProjectsByDate(Instant date);
+    List<ReturnedActivProjectsDto> findOpenProjectsByDate();
 
-    List<ProjectDto> findAllProjectsByStage(Stage stage);
+    List<ChartDate> getProjectStatus();
+
+    void updateProject(Project project);
+
 }
