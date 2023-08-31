@@ -10,6 +10,7 @@ import lombok.Setter;
 public class ReturnedActivProjectsDto {
 
     private String name;
+    private String description;
     private String dateBegin;
     private String dateEnd;
     private String employee;

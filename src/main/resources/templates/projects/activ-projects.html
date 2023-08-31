@@ -25,7 +25,9 @@
         </thead>
         <tbody>
         <tr th:each="project : ${openProjects}">
-            <td th:text="${project.getName()}"/>
+            <td th:text="${project.name}"
+                data-toggle="tooltip" data-placement="bottom" th:title="${project.description}">
+            </td>
             <td th:text="${project.getDateBegin}"/>
             <td th:text="${project.getDateEnd()}"/>
             <td th:text="${project.getEmployee()}"/>
