@@ -11,6 +11,7 @@ public class ActivProjectsDto {
 
     private Long id;
     private String name;
+    private String description;
     private String dateBegin;
     private String dateEnd;
     private String employee;

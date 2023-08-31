@@ -33,6 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
             ProjectDtoWithStringDate dto = new ProjectDtoWithStringDate();
             dto.setId(itm.getId().toString());
             dto.setName(itm.getName());
+            dto.setDescription(itm.getDescription());
             dto.setStage(itm.getStage());
             dto.setStartDate(format.format(itm.getStartDate()));
             dto.setEndDate(format.format(itm.getEndDate()));
@@ -91,6 +92,7 @@ public class ProjectServiceImpl implements ProjectService {
             itm.setName(inputDto.getName());
             itm.setDateBegin(inputDto.getDateBegin());
             itm.setDateEnd(inputDto.getDateEnd());
+            itm.setDescription(inputDto.getDescription());
             itm.setEmployee(inputDto.getEmployee());
             returnedDto.add(itm);
         }

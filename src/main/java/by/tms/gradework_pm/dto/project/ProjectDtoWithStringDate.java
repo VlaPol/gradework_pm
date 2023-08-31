@@ -14,6 +14,7 @@ public class ProjectDtoWithStringDate {
     private String Id;
     private String name;
     private String stage;
+    private String description;
     private String startDate;
     private String endDate;
 }

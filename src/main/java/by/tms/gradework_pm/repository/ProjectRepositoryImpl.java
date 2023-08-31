@@ -43,14 +43,14 @@ public class ProjectRepositoryImpl
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         final String sql = """
-                SELECT p.id, p.name, p.start_date,
+                SELECT p.id, p.name, p.start_date, p.description,
                 p.end_date, e.last_name
                 FROM project p
                 LEFT JOIN project_emp pe ON pe.project_id = p.id
                 LEFT JOIN employee e ON e.id = pe.employee_id
                 WHERE p.end_date::date > (:date) AND p.start_date::date < (:date)
                 GROUP BY p.id, p.name, p.start_date,
-                p.end_date, e.last_name
+                p.end_date, e.last_name, p.description
                 ORDER BY p.end_date DESC
                 """;
 
@@ -60,6 +60,7 @@ public class ProjectRepositoryImpl
             ActivProjectsDto dto = new ActivProjectsDto();
             dto.setId(rs.getLong("ID"));
             dto.setName(rs.getString("NAME"));
+            dto.setDescription(rs.getString("DESCRIPTION"));
             dto.setDateBegin(format.format(rs.getDate("START_DATE")));
             dto.setDateEnd(format.format(rs.getDate("END_DATE")));
             dto.setEmployee(rs.getString("LAST_NAME"));

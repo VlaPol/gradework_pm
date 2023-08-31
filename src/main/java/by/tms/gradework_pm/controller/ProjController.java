@@ -61,7 +61,7 @@ public class ProjController {
                                         @ModelAttribute("project") Project project,
                                         Model model) {
 
-        final String MESSAGE = "Возникла ошибка при обновлении информации по проекту";
+        final String MESSAGE = "Error on project update";
 
         try {
             Project tmpProject = projectService.findById(id);
@@ -77,7 +77,7 @@ public class ProjController {
     public String updateProject(@ModelAttribute("project") Project project,
                                 Model model) {
 
-        final String MESSAGE = "Возникла ошибка при обновлении информации по проекту";
+        final String MESSAGE = "Error on project update";
 
         projectService.updateProject(project);
         return "redirect:/projects";

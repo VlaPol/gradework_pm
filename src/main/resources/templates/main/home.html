@@ -4,7 +4,7 @@
 
 <head th:replace="layouts :: header">
     <title>
-        Main page
+        Project management
     </title>
 </head>
 
@@ -29,12 +29,16 @@
                 </thead>
                 <tbody>
                 <tr th:each="project : ${projectsList}">
-                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.name}"
+                        data-toggle="tooltip" data-placement="bottom" th:title="${project.description}">
+                    </td>
                     <td th:text="${project.stage}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+
 
         <div class="col-md-4">
             <canvas id="myDoughCHart" height="60" width="60"></canvas>
@@ -79,5 +83,6 @@
 <footer th:replace="layouts :: footer"></footer>
 
 <script type="text/javascript" th:src="@{js/myChart.js}"></script>
+
 </body>
 </html>

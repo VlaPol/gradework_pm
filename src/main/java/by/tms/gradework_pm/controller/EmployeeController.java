@@ -36,7 +36,7 @@ public class EmployeeController {
     @PostMapping("/save")
     public String saveEmployee(Employee employee, Errors errors, Model model) {
 
-        final String MESSAGE = "Работник с таким логином уже существует!";
+        final String MESSAGE = "Employee is exist";
 
         if (errors.hasErrors()) {
             return "employees/new-employee";
@@ -56,7 +56,7 @@ public class EmployeeController {
                                        @ModelAttribute("employee") Employee employee,
                                        Model model) {
 
-        final String MESSAGE = "Возникла ошибка при обновлении работника";
+        final String MESSAGE = "Error on update employee";
 
         if (employee.getId() == null) {
             try {
