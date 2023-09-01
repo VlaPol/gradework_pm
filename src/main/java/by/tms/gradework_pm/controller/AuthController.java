@@ -19,7 +19,7 @@ public class AuthController {
 
     private final UserService userService;
 
-    @GetMapping("/login")
+    @GetMapping({"/","login"})
     public String loginPage() {
         return "security/login";
     }
