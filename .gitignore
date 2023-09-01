@@ -37,3 +37,5 @@ build/
 /src/test/java/by/tms/job_finder/JobFinderApplicationTests.java
 /.mvn/wrapper/maven-wrapper.jar
 /.mvn/wrapper/maven-wrapper.properties
+/app.log
+
