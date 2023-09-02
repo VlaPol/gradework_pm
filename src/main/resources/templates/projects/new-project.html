@@ -20,39 +20,51 @@
             <tbody>
             <tr>
                 <th>Project</th>
-                <td><input type="text" placeholder="Project Name" th:field="${project.name}"></td>
+                <td>
+                    <label>
+                        <input type="text" placeholder="Project Name" th:field="${project.name}">
+                    </label>
+                </td>
                 <td><span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="${project.name}"> </span>
                 </td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td><textarea type="text" cols="38" placeholder="Enter Project Description"
-                              th:field="${project.description}"></textarea></td>
+                <td>
+                    <label>
+                        <textarea rows="5" cols="38" placeholder="Enter Project Description"
+                                  th:field="${project.description}"></textarea>
+                    </label>
+                </td>
                 <td><span style="color: red" th:if="${#fields.hasErrors('description')}"
                           th:errors="${project.description}"> </span></td>
             </tr>
             <tr>
                 <th>Status</th>
                 <th>
-                    <select name="stages" th:field="${project.stage}">
-                        <option th:each="stage : ${T(by.tms.gradework_pm.entity.Stage).values()}"
-                                th:value="${stage.getDisplayStage()}"
-                                th:text="${stage.getDisplayStage()}">
+                    <label>
+                        <select name="stages" th:field="${project.stage}">
+                            <option th:each="stage : ${T(by.tms.gradework_pm.entity.Stage).values()}"
+                                    th:value="${stage.getDisplayStage()}"
+                                    th:text="${stage.getDisplayStage()}">
 
-                        </option>
-                    </select>
+                            </option>
+                        </select>
+                    </label>
                 </th>
             </tr>
             <tr>
 
                 <th> Workers</th>
                 <th>
-                    <select th:field="*{employees}" multiple="multiple">
-                        <option th:each="employee : *{employees}"
-                                th:value="${employee.id}"
-                                th:text="${employee.lastName}">
-                        </option>
-                    </select>
+                    <label>
+                        <select th:field="*{employees}" multiple="multiple">
+                            <option th:each="employee : *{employees}"
+                                    th:value="${employee.id}"
+                                    th:text="${employee.lastName}">
+                            </option>
+                        </select>
+                    </label>
 
                 </th>
             </tr>

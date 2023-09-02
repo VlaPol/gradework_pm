@@ -38,7 +38,7 @@ public class PublicApiController {
         //------- Data fo diagram  --------
         List<ChartDate> projectData = projectService.getProjectStatus();
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = null;
+        String jsonString;
         try {
             jsonString = objectMapper.writeValueAsString(projectData);
         } catch (JsonProcessingException e) {
