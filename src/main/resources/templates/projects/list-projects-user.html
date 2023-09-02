@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="layouts :: head">
+    <title>Projects</title>
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>Projects Directory</h3>
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Project Name</th>
+            <th>Project Stage</th>
+            <th>Project Begin</th>
+            <th>Project End</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.name}"
+                data-toggle="tooltip" data-placement="bottom" th:title="${project.description}">
+            </td>
+            <td th:text="${project.getStage()}"/>
+            <td th:text="${project.getStartDate()}"/>
+            <td th:text="${project.getEndDate()}"/>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+
+</html>

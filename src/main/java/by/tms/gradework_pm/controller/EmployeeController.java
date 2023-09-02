@@ -25,9 +25,15 @@ public class EmployeeController {
 
     @GetMapping("")
     public String displayEmployees(Model model) {
+
         List<Employee> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
-        return "employees/list-employees";
+
+        if (isEquals()) {
+            return "employees/list-employees";
+        } else {
+            return "employees/list-employees-user";
+        }
     }
 
     @GetMapping("/new")
@@ -40,7 +46,7 @@ public class EmployeeController {
         } else {
             List<Employee> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
-            return "employees/list-employees";
+            return "employees/list-employees-user";
         }
     }
     @PostMapping("/save")
@@ -63,7 +69,7 @@ public class EmployeeController {
         } else {
             List<Employee> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
-            return "employees/list-employees";
+            return "employees/list-employees-user";
         }
 
     }
@@ -92,7 +98,7 @@ public class EmployeeController {
         } else {
             List<Employee> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
-            return "employees/list-employees";
+            return "employees/list-employees-user";
         }
 
     }
@@ -105,7 +111,7 @@ public class EmployeeController {
         } else {
             List<Employee> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
-            return "employees/list-employees";
+            return "employees/list-employees-user";
         }
     }
 

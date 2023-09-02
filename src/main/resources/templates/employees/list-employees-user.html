@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+
+<head th:replace="layouts :: header">
+    <title>employees</title>
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>Employee Directory</h3>
+    <hr>
+    <br>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tmpEmployee : ${employees}">
+            <td th:text="${tmpEmployee.getFirstName()}"/>
+            <td th:text="${tmpEmployee.getLastName()}"/>
+            <td th:text="${tmpEmployee.getEmail()}"/>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+
+</html>

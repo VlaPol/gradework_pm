@@ -30,7 +30,12 @@ public class ProjController {
     public String displayProjects(Model model) {
         List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
         model.addAttribute("projects", projects);
-        return "projects/list-projects";
+
+        if (isEquals()) {
+            return "projects/list-projects";
+        } else {
+            return "projects/list-projects-user";
+        }
     }
 
     @GetMapping("/new")
@@ -47,11 +52,11 @@ public class ProjController {
         } else {
             List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
             model.addAttribute("projects", projects);
-            return "projects/list-projects";
+            return "projects/list-projects-user";
         }
     }
 
-    @PostMapping( "/save")
+    @PostMapping("/save")
     public String createProject(Project project, BindingResult bindingResult, Model model) {
 
         if (isEquals()) {
@@ -65,7 +70,7 @@ public class ProjController {
         } else {
             List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
             model.addAttribute("projects", projects);
-            return "projects/list-projects";
+            return "projects/list-projects-user";
         }
 
     }
@@ -89,7 +94,7 @@ public class ProjController {
         } else {
             List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
             model.addAttribute("projects", projects);
-            return "projects/list-projects";
+            return "projects/list-projects-user";
         }
     }
 
@@ -105,7 +110,7 @@ public class ProjController {
         } else {
             List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
             model.addAttribute("projects", projects);
-            return "projects/list-projects";
+            return "projects/list-projects-user";
         }
 
     }
@@ -124,7 +129,7 @@ public class ProjController {
         } else {
             List<ProjectDtoWithStringDate> projects = projectService.getAllProjects();
             model.addAttribute("projects", projects);
-            return "projects/list-projects";
+            return "projects/list-projects-user";
         }
     }
 
