@@ -33,7 +33,9 @@ public class WebSpringSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((config) -> config
                         .requestMatchers("/js/**").permitAll()
+                //        .requestMatchers("/**").hasRole("ADMIN")
                         .requestMatchers("/public/**").permitAll()
+
                       //  .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
