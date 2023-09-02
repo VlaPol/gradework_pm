@@ -9,10 +9,11 @@ import by.tms.gradework_pm.service.EmployeeService;
 import by.tms.gradework_pm.service.ProjectService;
 import by.tms.gradework_pm.util.ProjectRoles;
 import by.tms.gradework_pm.util.SecurityUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,9 +58,12 @@ public class ProjController {
     }
 
     @PostMapping("/save")
-    public String createProject(Project project, BindingResult bindingResult, Model model) {
+    public String createProject(@Valid Project project, Errors errors, Model model) {
 
         if (isEquals()) {
+            if (errors.hasErrors()) {
+                return "projects/new-project";
+            }
             try {
                 projectService.saveNewProject(project);
                 return "redirect:/projects";
@@ -101,8 +105,6 @@ public class ProjController {
     @PostMapping("/update")
     public String updateProject(@ModelAttribute("project") Project project,
                                 Model model) {
-
-        final String MESSAGE = "Error on project update";
 
         if (isEquals()) {
             projectService.updateProject(project);

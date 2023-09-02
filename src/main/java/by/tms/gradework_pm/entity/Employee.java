@@ -1,7 +1,11 @@
 package by.tms.gradework_pm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import by.tms.gradework_pm.util.validation.UniqueValue;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,10 +21,21 @@ import java.util.List;
 public class Employee extends BaseEntity implements Serializable {
 
     @Column(name = "first_name")
+    @NotBlank()
+    @NotNull()
+    @Size(min = 2, max = 50)
     private String firstName;
+
     @Column(name = "last_name")
+    @NotBlank()
+    @NotNull()
+    @Size(min = 2, max = 50)
     private String lastName;
+
     @Column(name = "email")
+    @NotBlank
+    @UniqueValue
+    @Email
     private String email;
 
     @ManyToMany(cascade = {CascadeType.DETACH,
@@ -31,6 +46,5 @@ public class Employee extends BaseEntity implements Serializable {
     @JoinTable(name = "project_emp",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
-    @JsonIgnore
     private List<Project> projects;
 }

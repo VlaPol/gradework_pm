@@ -5,15 +5,14 @@ import by.tms.gradework_pm.exception.BusinessException;
 import by.tms.gradework_pm.service.EmployeeService;
 import by.tms.gradework_pm.util.ProjectRoles;
 import by.tms.gradework_pm.util.SecurityUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+
 import java.util.List;
 
 @Controller
@@ -49,8 +48,9 @@ public class EmployeeController {
             return "employees/list-employees-user";
         }
     }
+
     @PostMapping("/save")
-    public String saveEmployee(Employee employee, Errors errors, Model model) {
+    public String saveEmployee(@Valid Employee employee, Errors errors, Model model) {
 
         final String MESSAGE = "Employee is exist";
 
@@ -101,6 +101,20 @@ public class EmployeeController {
             return "employees/list-employees-user";
         }
 
+    }
+
+    @PostMapping("/update")
+    public String updateEmployee(@ModelAttribute("employee") Employee employee,
+                                 Model model) {
+
+        if (isEquals()) {
+            employeeService.updateEmployee(employee);
+            return "redirect:/employees";
+        } else {
+            List<Employee> employees = employeeService.getAllEmployees();
+            model.addAttribute("employees", employees);
+            return "employees/list-employees-user";
+        }
     }
 
     @GetMapping("/delete")
