@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.controller;
 
+import by.tms.gradework_pm.aop.LogActionsAspect;
 import by.tms.gradework_pm.dto.project.ProjectDtoWithStringDate;
 import by.tms.gradework_pm.dto.project.ReturnedActivProjectsDto;
 import by.tms.gradework_pm.entity.Employee;
@@ -58,6 +59,7 @@ public class ProjController {
     }
 
     @PostMapping("/save")
+    @LogActionsAspect
     public String createProject(@Valid Project project, Errors errors, Model model) {
 
         if (isEquals()) {
@@ -103,6 +105,7 @@ public class ProjController {
     }
 
     @PostMapping("/update")
+    @LogActionsAspect
     public String updateProject(@ModelAttribute("project") Project project,
                                 Model model) {
 
@@ -118,6 +121,7 @@ public class ProjController {
     }
 
     @GetMapping("/delete")
+    @LogActionsAspect
     public String deleteProject(@RequestParam("id") Long id, Model model) {
 
         if (isEquals()) {

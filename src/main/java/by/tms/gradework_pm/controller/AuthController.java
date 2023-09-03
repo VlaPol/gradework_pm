@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.controller;
 
+import by.tms.gradework_pm.aop.LogActionsAspect;
 import by.tms.gradework_pm.dto.RegistrationDto;
 import by.tms.gradework_pm.entity.principle.User;
 import by.tms.gradework_pm.exception.BusinessException;
@@ -32,6 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/save")
+    @LogActionsAspect
     public String register(@Valid @ModelAttribute("user") RegistrationDto user,
                            BindingResult result,
                            Model model) {
