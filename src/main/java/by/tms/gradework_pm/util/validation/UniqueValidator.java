@@ -14,7 +14,6 @@ public class UniqueValidator implements ConstraintValidator<UniqueValue, String>
 
     EmployeeRepository employeeRepository;
 
-
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
 
@@ -25,7 +24,6 @@ public class UniqueValidator implements ConstraintValidator<UniqueValue, String>
         } catch (BusinessException e) {
             throw new RuntimeException(e);
         }
-
         return emp == null;
     }
 }
