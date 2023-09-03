@@ -6,6 +6,8 @@ import lombok.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,9 +34,13 @@ public class Project extends BaseEntity implements Serializable {
     private String stage;
 
     @Column(name = "start_date")
+    @DateTimeFormat(pattern = "mm/dd/yyyy")
+    @NotNull
     private Date startDate;
 
     @Column(name = "end_date")
+    @DateTimeFormat(pattern = "mm/dd/yyyy")
+    @NotNull
     private Date endDate;
 
     @ManyToMany(cascade = {CascadeType.DETACH,

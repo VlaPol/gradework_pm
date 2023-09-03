@@ -47,14 +47,12 @@
                             <option th:each="stage : ${T(by.tms.gradework_pm.entity.Stage).values()}"
                                     th:value="${stage.getDisplayStage()}"
                                     th:text="${stage.getDisplayStage()}">
-
                             </option>
                         </select>
                     </label>
                 </th>
             </tr>
             <tr>
-
                 <th> Workers</th>
                 <th>
                     <label>
@@ -65,18 +63,23 @@
                             </option>
                         </select>
                     </label>
-
                 </th>
             </tr>
             <tr>
                 <th> Start Date</th>
                 <th><input id="startdate" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
                            th:field="${project.startDate}"></th>
+                <th>
+                    <span style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="${project.startDate}"> </span>
+                </th>
             </tr>
             <tr>
                 <th> End Date</th>
                 <th><input id="enddate" type="text" class="mb-4 col-2 col-xs-4" placeholder="mm/dd/yyyy"
                            th:field="${project.endDate}"></th>
+                <th>
+                    <span style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="${project.endDate}"> </span>
+                </th>
             </tr>
             </tbody>
         </table>
