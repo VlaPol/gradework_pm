@@ -1,5 +1,6 @@
 package by.tms.gradework_pm.controller;
 
+import by.tms.gradework_pm.aop.LogActionsAspect;
 import by.tms.gradework_pm.entity.Employee;
 import by.tms.gradework_pm.exception.BusinessException;
 import by.tms.gradework_pm.service.EmployeeService;
@@ -50,6 +51,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
+    @LogActionsAspect
     public String saveEmployee(@Valid Employee employee, Errors errors, Model model) {
 
         final String MESSAGE = "Employee is exist";
@@ -104,6 +106,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/update")
+    @LogActionsAspect
     public String updateEmployee(@ModelAttribute("employee") Employee employee,
                                  Model model) {
 
@@ -118,6 +121,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete")
+    @LogActionsAspect
     public String deleteEmployee(@RequestParam("empid") Long id, Model model) {
         if (isEquals()) {
             employeeService.deleteEmployee(id);
