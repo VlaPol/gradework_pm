@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findByEmail(String email) throws BusinessException {
         return employeeRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(""));
+                .orElseThrow(() -> new BusinessException("No such user"));
     }
 
     @Override
