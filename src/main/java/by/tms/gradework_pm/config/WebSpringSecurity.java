@@ -33,22 +33,26 @@ public class WebSpringSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((config) -> config
                         .requestMatchers("/js/**").permitAll()
-                //        .requestMatchers("/**").hasRole("ADMIN")
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/public/**").permitAll()
-
-                      //  .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/public")
+                        .failureUrl("/login?error")
                         .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutSuccessUrl("/login?logout")
                                 .permitAll()
-                );
+                ).exceptionHandling(exception -> exception
+                        .accessDeniedPage("/login"))
+        ;
+
         return httpSecurity.build();
     }
 
