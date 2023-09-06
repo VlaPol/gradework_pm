@@ -54,6 +54,6 @@ public class AuthController {
         } catch (BusinessException e) {
             return "errorpages/error";
         }
-        return "redirect:/security/register?success";
+        return "redirect:/login";
     }
 }
