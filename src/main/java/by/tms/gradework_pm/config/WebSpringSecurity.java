@@ -34,7 +34,9 @@ public class WebSpringSecurity {
                 .authorizeHttpRequests((config) -> config
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/register/**").permitAll()
                         .requestMatchers("/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )

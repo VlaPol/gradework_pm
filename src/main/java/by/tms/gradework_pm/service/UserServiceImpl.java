@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registrationDto.getEmail());
 
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        Role role = userRepository.findByRole(ProjectRoles.ROLE_GUEST.name())
+        String name = ProjectRoles.ROLE_GUEST.name();
+        Role role = userRepository.findByRole(name)
                 .orElseThrow(() -> new BusinessException("No such role"));
         user.setRoles(new HashSet<>(Collections.singletonList(role)));
         userRepository.saveUser(user);

@@ -30,7 +30,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "is_active")
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     @ManyToMany(cascade = {CascadeType.DETACH,
             CascadeType.MERGE,

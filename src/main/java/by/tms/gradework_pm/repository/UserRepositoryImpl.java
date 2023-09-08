@@ -4,10 +4,12 @@ import by.tms.gradework_pm.entity.principle.Role;
 import by.tms.gradework_pm.entity.principle.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 @Repository
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
