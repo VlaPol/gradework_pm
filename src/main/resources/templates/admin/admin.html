@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+
+<head th:replace="layouts-admin :: header">
+    <title>employees</title>
+</head>
+
+<body>
+
+<nav th:replace="layouts-admin :: navbar"></nav>
+
+<div class="container">
+    <h3>Administration</h3>
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Activate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <form th:action="@{/admin/update}" method="post">
+                <input type="hidden" th:value="${user.id}" th:attr="name='id'">
+                <td th:text="${user.userName}" th:value="${user.userName}"/>
+                <td th:text="${user.email}"/>
+                <td th:width="150">
+                    <label>
+                        <select th:name="role">
+                            <option
+                                    th:each="tmpRole : ${roles}"
+                                    th:value="${tmpRole}"
+                                    th:text="${tmpRole}"
+                                    th:selected="${user.role == tmpRole}">
+                            </option>
+                        </select>
+                    </label>
+                </td>
+                <td th:text="${user.enabled}"/>
+                <td th:width="100">
+                    <div class="d-grid gap-2 d-md-block">
+                        <button class="btn me-md-2" type="submit"
+                                th:classappend="${user.role}=='GUEST'
+                                ?  'btn-outline-warning'
+                                : 'btn-outline-success'
+                            ">
+
+                            Activate
+                        </button>
+                    </div>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>

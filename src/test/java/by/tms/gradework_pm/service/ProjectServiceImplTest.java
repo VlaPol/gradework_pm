@@ -131,5 +131,5 @@ class ProjectServiceImplTest {
         List<ReturnedActivProjectsDto> returnedProjects = projectService.findOpenProjectsByDate();
         assertTrue(returnedProjects.isEmpty());
     }
-    
+
 }

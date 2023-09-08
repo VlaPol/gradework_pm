@@ -6,6 +6,7 @@ import by.tms.gradework_pm.dto.project.ProjectDtoWithStringDate;
 import by.tms.gradework_pm.entity.Project;
 import by.tms.gradework_pm.service.EmployeeService;
 import by.tms.gradework_pm.service.ProjectService;
+import by.tms.gradework_pm.util.ProjectRoles;
 import by.tms.gradework_pm.util.SecurityUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,8 +48,15 @@ public class PublicApiController {
         model.addAttribute("projectStatusCnt", jsonString);
         //*******************************************************************
 
-        return "main/home";
+        if (isEquals()) {
+            return "main/home-admin";
+        } else {
+            return "main/home";
+        }
     }
 
-
+    private static boolean isEquals() {
+        return SecurityUtil.getRole()
+                .equals(ProjectRoles.ROLE_ADMIN.name());
+    }
 }
